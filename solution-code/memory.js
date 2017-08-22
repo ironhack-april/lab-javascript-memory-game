@@ -56,8 +56,7 @@ MemoryGame.prototype.selectCard = function(card) {
     $('.front,.back').addClass('blocked');
     this.pairs_clicked++;
     this.picked_cards.push(card);
-
-    if (this.picked_cards[0].id == this.picked_cards[1].id) {
+    if (this.picked_cards[0].getAttribute("name") == this.picked_cards[1].getAttribute("name")) {
       this.picked_cards = [];
       this.pairs_guessed++;
       $('.front,.back').removeClass('blocked');
@@ -91,12 +90,10 @@ $(document).ready(function(){
     memoryGame.Cards.forEach(function(pic, index) {
       html += '<div class= "card" id="card_' + pic.name + '">';
       html += '<div class="back"';
-      html += '    name="img/' + pic.name + '"';
-      html += '    id="'       + pic.img +  '">';
+      html += '    name="'       + pic.img +  '">';
       html += '</div>';
       html += '<div class="front" ';
       html += 'style="background: url(img/' + pic.img + '") no-repeat"';
-      html += '    id="'       + pic.img +  '">';
       html += '</div>';
       html += '</div>';
     });
@@ -107,7 +104,7 @@ $(document).ready(function(){
 
     $('.back').on('click', function(){
       memoryGame.selectCard(this);
-      this.style.background = 'url(img/' + this.id + ') no-repeat';
+      this.style.background = 'url(img/' + this.getAttribute("name") + ') no-repeat';
       document.getElementById('pairs_clicked').innerHTML = memoryGame.pairs_clicked;
       document.getElementById('pairs_guessed').innerHTML = memoryGame.pairs_guessed;
       if (memoryGame.finished()) {alert("You wooon!!!");}
