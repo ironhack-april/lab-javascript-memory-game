@@ -51,6 +51,7 @@ MemoryGame.prototype.selectCard = function(card) {
 
   if (this.picked_cards.length === 0) {
     this.picked_cards.push(card);
+    this.picked_cards[0].className += " active"
   }
   else if (this.picked_cards.length == 1) {
     $('.front,.back').addClass('blocked');
@@ -66,6 +67,8 @@ MemoryGame.prototype.selectCard = function(card) {
       setTimeout(function () {
         self.picked_cards[0].style.background = '#456783';
         self.picked_cards[1].style.background = '#456783';
+        self.picked_cards[0].classList.remove("active");
+        self.picked_cards[1].classList.remove("active");
         self.picked_cards = [];
         $('.front,.back').removeClass('blocked');
       }, 1000);
@@ -103,10 +106,13 @@ $(document).ready(function(){
     // Bind the click event of each element to a function
 
     $('.back').on('click', function(){
-      memoryGame.selectCard(this);
-      this.style.background = 'url(img/' + this.getAttribute("name") + ') no-repeat';
-      document.getElementById('pairs_clicked').innerHTML = memoryGame.pairs_clicked;
-      document.getElementById('pairs_guessed').innerHTML = memoryGame.pairs_guessed;
-      if (memoryGame.finished()) {alert("You wooon!!!");}
+      if(!this.classList.contains("active")){
+        memoryGame.selectCard(this);
+        this.style.background = 'url(img/' + this.getAttribute("name") + ') no-repeat';
+        document.getElementById('pairs_clicked').innerHTML = memoryGame.pairs_clicked;
+        document.getElementById('pairs_guessed').innerHTML = memoryGame.pairs_guessed;
+        if (memoryGame.finished()) {alert("You wooon!!!");}
+      }
+
     });
 });
