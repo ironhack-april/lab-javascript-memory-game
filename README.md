@@ -51,8 +51,6 @@ To code the game, on one hand we will need to re-create the physical parts of th
 
 Remember: organization is the key. Keep the JavaScript related to your layout and your user interface in one section of your file and the JavaScript related to the code in another section.
 
-For this exercise, it won't be necessary to create several files.
-
 ### Think about the layout
 
 - Add to your html the parts you'll game will have. The board, the tiles and the score.
@@ -89,33 +87,33 @@ Also, link your `js` file. We already know how to do it :wink:.
 <link type="text/css" rel="stylesheet" href="memory.css" media="screen">
 ```
 
-
 ### The Logic
 
-Take a look at the `js` starter file. You already have a section for the logic and one section for the HTML/CSS interactions.
+Take a look at the `src/main.js` and `src/memory.js` starter file. You already have one file for the logic and one file for the HTML/CSS interactions.
 
-### The Game
+### The Game Logic
 
-- First things first: we need somewhere to get the info about our tiles. We are providing the images for your game in the `img` directory. Use the proper element in your `memory.js` file to fill up the required info.
+We will test our game logic using Jasmine (at this point you shold be **Jasmine Masters!**). Actually, for this game the game logic is pretty simple, we only going to need a `MemoryGame` constructor, and some methods to shuffle and compare cards, and one to check when the game finishes.
 
-```javascript
-this.Cards = [];
-```
+- First things first: Create a `MemoryGame` constructor that will receive an array of cards as a parameter and set this array to a `this.cards` property. We also need a `this.pickedCards` array, where we will be storing the cards the user have clicked so we can compare them. Finally a `this.pairsClicked` and `this.pairsGuessed` properties where will be adding every time a user choose and guess a pair.
+
 - Create a method to shuffle the cards, so every time you create a new game, the order or the card changes. **Hint:** It would be a good idea to implement something like a [Fisher-Yates Shuffle](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle).
 
 ```javascript
 MemoryGame.prototype._shuffleCard = function() {
 };
 ```
-- When the tiles are rendered, the user will select a card and the whole logic of the game will be executed. Remember you will need the information of the picked element.
+- When a user pick 2 cards, we will need to check if they are the same. Let's create a method `checkIfPair`, that will receive two parameters (both cards selected by the user). The method will add 1 to our `pairsClicked` property, and if the cards are the same also add 1 to `pairsGuessed`.
+
+Finally it will return `true` or `false` depending on the result of comparing both cards.
 
 ```javascript
-MemoryGame.prototype.selectCard = function(card) 
+MemoryGame.prototype.checkIfPair = function(firstCard, secondCard) {
+
 };
 ```
 
-
-- As Memory doesn't have a 'Game Over', we just need a 'Win' function.
+- As Memory doesn't have a 'Game Over', we just need a 'Win' function, where we need to check if our property `pairsGuessed` reach the numbers of pairs the game has.
 
 ```javascript
 MemoryGame.prototype.finished = function() {
